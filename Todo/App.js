@@ -1,14 +1,33 @@
+import { useState } from "react";
 import { StyleSheet, Text, TextInput, View, Button } from "react-native";
 
 export default function App() {
+  const [input, setInput] = useState("");
+  const [list, setList] = useState(["Hi", "Hello"]);
+
+  const inputHandler = (e) => {
+    setInput(e);
+  };
+
+  const addHandler = () => {
+    setList((l) => [...l, input]);
+    setInput("");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.input}>
-        <TextInput placeholder="Add Todo" style={styles.textInput} />
-        <Button title="Add" />
+        <TextInput
+          placeholder="Add Todo"
+          onChangeText={inputHandler}
+          style={styles.textInput}
+        />
+        <Button title="Add" onPress={addHandler} />
       </View>
       <View style={styles.items}>
-        <Text>List Items ...</Text>
+        {list.map((cItem) => (
+          <Text key={Math.random()}>{Object.values(cItem.toString())}</Text>
+        ))}
       </View>
     </View>
   );
